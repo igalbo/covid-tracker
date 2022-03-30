@@ -51,29 +51,24 @@ function App() {
 
   const onCountryChange = async (event) => {
     const countryCode = event.target.value;
-    setCountry(countryCode);
-
     const url =
       countryCode === "worldwide"
         ? "https://disease.sh/v3/covid-19/all"
         : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
 
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setCountry(countryCode);
-        setCountryInfo(data);
-        if (countryCode !== "worldwide") {
-          setMapCenter([data.countryInfo.lat, data.countryInfo.long]); //lat: 34.8074, lng: -40.4796
-        } else {
-          setMapCenter([34.8074, -40.4796]);
-          setMapZoom(3);
-        }
-        setMapZoom(4);
-      });
-  };
+    const response = await fetch(url);
+    const data = await response.json();
 
-  console.log("COUNTRY INFO >>>", countryInfo);
+    setCountry(countryCode);
+    setCountryInfo(data);
+    if (countryCode !== "worldwide") {
+      setMapCenter([data.countryInfo.lat, data.countryInfo.long]); //lat: 34.8074, lng: -40.4796
+    } else {
+      setMapCenter([34.8074, -40.4796]);
+      setMapZoom(3);
+    }
+    setMapZoom(4);
+  };
 
   return (
     <div className="app">
