@@ -6,17 +6,17 @@ const casesTypeColors = {
   cases: {
     hex: "#CC1034",
     rgb: "rgb(204, 16, 52)",
-    multiplier: 100,
+    multiplier: 50,
   },
   recovered: {
     hex: "#7dd71d",
     rgb: "rgb(125, 215, 29)",
-    multiplier: 150,
+    multiplier: 75,
   },
   deaths: {
     hex: "#fb4443",
     rgb: "rgb(251, 68, 67)",
-    multiplier: 250,
+    multiplier: 200,
   },
 };
 
@@ -31,8 +31,9 @@ export const prettyPrintStat = (stat) =>
 
 //draw circles on the map
 export const showDataOnMap = (data, casesType = "cases") =>
-  data.map((country) => (
+  data.map((country, index) => (
     <Circle
+      key={index}
       center={[country.countryInfo.lat, country.countryInfo.long]}
       fillOpacity={0.4}
       color={casesTypeColors[casesType].hex}
